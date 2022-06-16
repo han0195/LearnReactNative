@@ -1,23 +1,32 @@
-import React, {useState} from 'react';
-import {Button, SafeAreaView, StyleSheet} from 'react-native';
-import Counter from './components/Counter';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import DateHead from './components/DeteHead';
+/* 라이브러리 */
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import AddTodo from './components/AddTodo';
+import Empty from './components/Empty';
 
-const App = () => {
-  const [count, setCount] = useState(0);
-  /* +1 했을때 호출된 함수*/
-  const onIncrease = () => setCount(count + 1);
-  /* +1 했을때 호출된 함수*/
-  const onDecrease = () => setCount(count - 1);
+function App() {
+  const today = new Date();
+
   return (
-    <SafeAreaView style={styles.full}>
-      <Counter count={count} onIncrease={onIncrease} onDecrease={onDecrease} />
-    </SafeAreaView>
+    <SafeAreaProvider>
+      {/* edges = {[bottom]} <- 해당 컴포넌트를 바텀에만 사용한다는의미*/}
+      <SafeAreaView edges={['bottom']} style={styles.block}>
+        {/* DateHead 컴포넌트 호출*/}
+        <DateHead date={today} />
+        {/*Empty.js 호출*/}
+        <Empty />
+        {/* AddTodo 컴포넌트 호출*/}
+        <AddTodo />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
-};
+}
+
 const styles = StyleSheet.create({
-  full: {
+  block: {
     flex: 1,
-    /*flex 1 은 자신의 위치한 곳을 모두 차지한다.*/
   },
 });
 export default App;
